@@ -60,7 +60,6 @@ export default function Home() {
         id: `photo${index}`,
       }
     ))
-    console.log(temp4);
     setMatchedCards(temp4)
   }, [cards]);
 
@@ -81,7 +80,9 @@ export default function Home() {
   useEffect(() => {
     if (numberOfClicks > 0 && numberOfClicks % 2 === 0) {
       if (firstFlip && secondFlip && firstFlip.matchableId === secondFlip.matchableId) {
-        cardsMatchedFeedback();
+        setTimeout(() => {
+          cardsMatchedFeedback();
+        }, 500)
       }
       else {
         rotateCardsBack();
