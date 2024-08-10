@@ -171,6 +171,7 @@ export default function Home() {
               <div id={item.id} className="flip-box-inner w-full">
                 <div className="bg-green-700 flex flex-col justify-center items-center flip-box-front w-full rounded-md">
                   <img
+                    alt="rocket icon"
                     className="rounded-md p-6"
                     src="/rocket_launch_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png"
                     width="96"
