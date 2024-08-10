@@ -32,6 +32,7 @@ export default function Home() {
   const [firstFlip, setFirstFlip] = useState<DrawFlip | null>(null);
   const [secondFlip, setSecondFlip] = useState<DrawFlip | null>(null);
   const [numberOfClicks, setNumberOfClicks] = useState<number>(0);
+
   const resetGame = () => {
     setFirstFlip(null);
     setSecondFlip(null);
@@ -91,6 +92,16 @@ export default function Home() {
   }, [numberOfClicks])
 
   const handleClick = (id: string, matchableId: string) => {
+    if (firstFlip?.id === id) {
+      const card = document.querySelector(`#${id}`)
+      if (card) {
+        card.classList.remove('rotate')
+      }
+      setFirstFlip(null);
+      setNumberOfClicks(0);
+      return;
+    }
+
     setNumberOfClicks(prevState => prevState + 1);
     const element = document.querySelector(`#${id}`)
     if (element) {
