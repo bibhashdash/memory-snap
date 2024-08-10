@@ -16,8 +16,6 @@
   }
 }
 .flip-box {
-  background-color: transparent;
-  border: 1px solid #f1f1f1;
   perspective: 1000px;
 }
 
@@ -42,14 +40,7 @@
   backface-visibility: hidden;
 }
 
-.flip-box-front {
-  background-color: #bbb;
-  color: black;
-}
-
 .flip-box-back {
-  background-color: #555;
-  color: white;
   transform: rotateY(180deg);
 }
 .matched {

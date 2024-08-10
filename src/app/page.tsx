@@ -1,6 +1,7 @@
 'use client';
 import {useEffect, useState} from "react";
-
+import Lottie from "lottie-react";
+import celebration from './celebration.json';
 export interface BasicCard {
   imageSrc: string,
   matchableId: string,
@@ -88,6 +89,7 @@ export default function Home() {
   useEffect(() => {
     if (numberOfClicks > 0 && numberOfClicks % 2 === 0) {
       if (firstFlip && secondFlip && firstFlip.matchableId === secondFlip.matchableId) {
+        setScore(prevState => prevState + 1);
         setTimeout(() => {
           cardsMatchedFeedback();
         }, 500)
@@ -96,7 +98,7 @@ export default function Home() {
         rotateCardsBack();
       }
     }
-  }, [numberOfClicks])
+  }, [numberOfClicks]);
 
   const handleClick = (id: string, matchableId: string) => {
     if (firstFlip?.id === id) {
@@ -147,15 +149,18 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 py-4">
+      {
+        score === 8 && (
+          <div className="absolute w-full h-full z-10">
+            <Lottie animationData={celebration} />
+          </div>
+        )
+      }
       <div className="flex justify-between w-full max-w-5xl items-center text-2xl font-bold px-4">
         <p>Memory Snap Game</p>
-        <p>{score}</p>
+        <p>Score: <span className="text-blue-500">{score}</span></p>
       </div>
-      {/*<button className="bg-gray-700 text-gray-50 px-2 py-1 rounded-md" onClick={() => {*/}
-      {/*  alert("resetting game");*/}
-      {/*  resetGame()*/}
-      {/*}}>Reset Game</button>*/}
-      <div className="grid grid-cols-4 justify-items-center w-full max-w-5xl">
+      <div className="grid grid-cols-4 gap-1 justify-items-center w-full max-w-5xl">
         {
           matchedCards.map(item => (
             <div
@@ -164,11 +169,15 @@ export default function Home() {
               className="flip-box cursor-pointer w-full max-w-[200px] h-[100px] sm:h-[200px]"
             >
               <div id={item.id} className="flip-box-inner w-full">
-                <div className="flex flex-col justify-center flip-box-front w-full">
-                  <p className="sm:text-xs font-extrabold text-blue-700">Memory Snap</p>
+                <div className="bg-green-700 flex flex-col justify-center items-center flip-box-front w-full rounded-md">
+                  <img
+                    className="rounded-md p-6"
+                    src="/rocket_launch_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png"
+                    width="96"
+                  />
                 </div>
-                <div className="flip-box-back w-fit">
-                  <img src={item.card.imageSrc} alt="card-image" className="w-fit" />
+                <div className="flip-box-back w-full rounded-md">
+                  <img src={item.card.imageSrc} alt="card-image" className="w-fit rounded-md box-border border-2 border-green-700" />
                 </div>
               </div>
             </div>
