@@ -32,7 +32,7 @@
   transform-style: preserve-3d;
 }
 
-.flip-box:hover .flip-box-inner {
+.rotate {
   transform: rotateY(180deg);
 }
 
@@ -53,4 +53,14 @@
   background-color: #555;
   color: white;
   transform: rotateY(180deg);
+}
+.matched {
+  animation-name: scaleAnimation;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+@keyframes scaleAnimation {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); }
 }
