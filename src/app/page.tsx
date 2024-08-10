@@ -37,15 +37,16 @@ export default function Home() {
     setFirstFlip(null);
     setSecondFlip(null);
     setNumberOfClicks(0);
-    const temp: Array<BasicCard> = [];
-    for (let i= 0; i < 8; i++) {
-      const imageTemp = `https://picsum.photos/id/${getRandomNumber()}/200`
-      temp.push({
-        imageSrc: imageTemp,
-        matchableId: `photo${i}`,
-      })
-    }
-    setCards(temp);
+    fetch("https://picsum.photos/v2/list?limit=8")
+      .then(result => result.json())
+      .then(result => {
+        setCards(result.map((item: any, index: number) => (
+          {
+            imageSrc: item.download_url,
+            matchableId: `photo${item.id}`,
+          }
+        )))
+      });
   }
 
   useEffect(() => {
@@ -142,19 +143,20 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center gap-4">
       <div>Memory Snap Game</div>
       <button className="bg-gray-700 text-gray-50 px-2 py-1 rounded-md" onClick={resetGame}>Reset Game</button>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 w-full max-w-5xl">
         {
           matchedCards.map(item => (
             <div
               onClick={() => handleClick(item.id, item.card.matchableId)}
-              key={item.id} className="flip-box cursor-pointer"
+              key={item.id}
+              className="flip-box cursor-pointer w-full h-[100px] sm:h-[200px]"
             >
-              <div id={item.id} className="flip-box-inner">
-                <div className="flex flex-col justify-center flip-box-front">
-                  <p className="text-xl font-extrabold text-blue-700">Memory Snap</p>
+              <div id={item.id} className="flip-box-inner w-full">
+                <div className="flex flex-col justify-center flip-box-front w-full">
+                  <p className="sm:text-xs font-extrabold text-blue-700">Memory Snap</p>
                 </div>
-                <div className="flip-box-back">
-                  <img src={item.card.imageSrc} alt="card-image" width="200" height="200" />
+                <div className="flip-box-back w-fit">
+                  <img src={item.card.imageSrc} alt="card-image" className="w-fit" />
                 </div>
               </div>
             </div>
