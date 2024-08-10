@@ -26,27 +26,36 @@ export interface DrawFlip {
   matchableId: string,
 }
 
+function generateUniqueNumbers(): Array<number> {
+  const set: Set<number> = new Set();
+
+  while(set.size < 8) {
+    set.add(Math.floor(Math.random() * 500));
+  }
+
+  return Array.from(set);
+}
+
 export default function Home() {
   const [cards, setCards] = useState<Array<BasicCard>>([]);
   const [matchedCards, setMatchedCards] = useState<Array<GameCard>>([]);
   const [firstFlip, setFirstFlip] = useState<DrawFlip | null>(null);
   const [secondFlip, setSecondFlip] = useState<DrawFlip | null>(null);
   const [numberOfClicks, setNumberOfClicks] = useState<number>(0);
+  const [score, setScore] = useState<number>(0)
 
   const resetGame = () => {
     setFirstFlip(null);
     setSecondFlip(null);
     setNumberOfClicks(0);
-    fetch("https://picsum.photos/v2/list?limit=8")
-      .then(result => result.json())
-      .then(result => {
-        setCards(result.map((item: any, index: number) => (
-          {
-            imageSrc: item.download_url,
-            matchableId: `photo${item.id}`,
-          }
-        )))
-      });
+    setScore(0);
+    const temp = generateUniqueNumbers();
+    setCards(temp.map((item, index) => (
+      {
+        imageSrc: `https://picsum.photos/id/${item}/200`,
+        matchableId: `photo${index}`,
+      }
+    )))
   }
 
   useEffect(() => {
@@ -140,16 +149,22 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-4">
-      <div>Memory Snap Game</div>
-      <button className="bg-gray-700 text-gray-50 px-2 py-1 rounded-md" onClick={resetGame}>Reset Game</button>
-      <div className="grid grid-cols-4 w-full max-w-5xl">
+    <main className="flex min-h-screen flex-col items-center gap-4 py-4">
+      <div className="flex justify-between w-full max-w-5xl items-center text-2xl font-bold px-4">
+        <p>Memory Snap Game</p>
+        <p>{score}</p>
+      </div>
+      {/*<button className="bg-gray-700 text-gray-50 px-2 py-1 rounded-md" onClick={() => {*/}
+      {/*  alert("resetting game");*/}
+      {/*  resetGame()*/}
+      {/*}}>Reset Game</button>*/}
+      <div className="grid grid-cols-4 justify-items-center w-full max-w-5xl">
         {
           matchedCards.map(item => (
             <div
               onClick={() => handleClick(item.id, item.card.matchableId)}
               key={item.id}
-              className="flip-box cursor-pointer w-full h-[100px] sm:h-[200px]"
+              className="flip-box cursor-pointer w-full max-w-[200px] h-[100px] sm:h-[200px]"
             >
               <div id={item.id} className="flip-box-inner w-full">
                 <div className="flex flex-col justify-center flip-box-front w-full">
