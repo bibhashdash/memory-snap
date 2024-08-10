@@ -17,9 +17,6 @@ const shuffle = (array: Array<BasicCard>) => {
   }
   return shuffledArray;
 };
-const getRandomNumber = () => {
-  return Math.floor(Math.random() * 200);
-}
 
 export interface DrawFlip {
   id: string,
