@@ -40,12 +40,14 @@ export default function Home() {
   const [firstFlip, setFirstFlip] = useState<DrawFlip | null>(null);
   const [secondFlip, setSecondFlip] = useState<DrawFlip | null>(null);
   const [numberOfClicks, setNumberOfClicks] = useState<number>(0);
-  const [score, setScore] = useState<number>(0)
+  const [score, setScore] = useState<number>(0);
+  const [numberOfTries, setNumberOfTries] = useState<number>(0);
 
   const resetGame = () => {
     setFirstFlip(null);
     setSecondFlip(null);
     setNumberOfClicks(0);
+    setNumberOfTries(0);
     setScore(0);
     const temp = generateUniqueNumbers();
     setCards(temp.map((item, index) => (
@@ -97,6 +99,7 @@ export default function Home() {
       else {
         rotateCardsBack();
       }
+      setNumberOfTries(prevState => prevState + 1);
     }
   }, [numberOfClicks]);
 
@@ -159,6 +162,7 @@ export default function Home() {
       <div className="flex justify-between w-full max-w-5xl items-center text-2xl font-bold px-4">
         <p>Memory Snap Game</p>
         <p>Score: <span className="text-blue-500">{score}</span></p>
+        <p>Attempts: <span className="text-blue-500">{numberOfTries}</span></p>
       </div>
       <div className="grid grid-cols-4 gap-1 justify-items-center w-full max-w-5xl">
         {
