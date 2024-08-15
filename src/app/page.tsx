@@ -45,12 +45,9 @@ export default function Home() {
   const [level, setLevel] = useState<number>(1);
 
   const resetGame = () => {
-    const newTemp = document.querySelectorAll('.flip-box-inner');
-    for (let i = 0; i < newTemp.length; i++) {
-      if (newTemp[i].classList.contains('rotate')) {
-        newTemp[i].classList.remove('rotate')
-      }
-    }
+    const newTemp = document.querySelector('.rotate');
+    newTemp && newTemp.classList.remove('rotate');
+
     setFirstFlip(null);
     setSecondFlip(null);
     setNumberOfClicks(0);
