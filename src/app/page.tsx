@@ -151,7 +151,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-4 py-4">
+    <main className="flex h-full flex-col items-center gap-4 py-4">
       {
         score === 8 && (
           <div className="absolute w-full h-full z-10">
@@ -159,12 +159,14 @@ export default function Home() {
           </div>
         )
       }
-      <div className="flex justify-between w-full max-w-5xl items-center text-2xl font-bold px-4">
+      <div className="flex flex-col w-full max-w-5xl items-center text-2xl font-bold px-4">
         <p>Memory Snap Game</p>
-        <p>Score: <span className="text-blue-500">{score}</span></p>
-        <p>Attempts: <span className="text-blue-500">{numberOfTries}</span></p>
+        <div className="flex w-full justify-between">
+          <p>Score: <span className="text-blue-500">{score}</span></p>
+          <p>Attempts: <span className="text-blue-500 w-[90px]">{numberOfTries}</span></p>
+        </div>
       </div>
-      <div className="grid grid-cols-4 gap-1 justify-items-center w-full max-w-5xl">
+      <div className="grid grid-cols-4 gap-1 px-1 justify-items-center w-full max-w-5xl">
         {
           matchedCards.map(item => (
             <div
