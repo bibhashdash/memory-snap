@@ -52,7 +52,7 @@ export default function Home() {
     setSecondFlip(null);
     setNumberOfClicks(0);
     setNumberOfTries(0);
-    setLevel(0);
+    setLevel(1);
     setScore(0);
     const temp = generateUniqueNumbers();
     setCards(temp.map((item, index) => (
