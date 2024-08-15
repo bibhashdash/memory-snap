@@ -42,8 +42,15 @@ export default function Home() {
   const [numberOfClicks, setNumberOfClicks] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [numberOfTries, setNumberOfTries] = useState<number>(0);
+  const [level, setLevel] = useState<number>(1);
 
   const resetGame = () => {
+    const newTemp = document.querySelectorAll('.flip-box-inner');
+    for (let i = 0; i < newTemp.length; i++) {
+      if (newTemp[i].classList.contains('rotate')) {
+        newTemp[i].classList.remove('rotate')
+      }
+    }
     setFirstFlip(null);
     setSecondFlip(null);
     setNumberOfClicks(0);
@@ -52,7 +59,7 @@ export default function Home() {
     const temp = generateUniqueNumbers();
     setCards(temp.map((item, index) => (
       {
-        imageSrc: `https://picsum.photos/id/${item}/200`,
+        imageSrc: `https://picsum.photos/id/${item}/150`,
         matchableId: `photo${index}`,
       }
     )))
@@ -151,7 +158,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex h-full flex-col items-center gap-4 py-4">
+    <main className="flex h-full flex-col items-center gap-6 py-4">
       {
         score === 8 && (
           <div className="absolute w-full h-full z-10">
@@ -159,11 +166,11 @@ export default function Home() {
           </div>
         )
       }
-      <div className="flex flex-col w-full max-w-5xl items-center text-2xl font-bold px-4">
-        <p>Memory Snap Game</p>
+      <div className="flex flex-col w-full max-w-5xl items-center text-2xl font-bold px-4 gap-4">
+        <h1>Memory Snap Game</h1>
         <div className="flex w-full justify-between">
-          <p>Score: <span className="text-blue-500">{score}</span></p>
-          <p>Attempts: <span className="text-blue-500 w-[90px]">{numberOfTries}</span></p>
+          <h2>Score: <span className="text-blue-500">{score}</span></h2>
+          <h2>Attempts: <span className="text-blue-500 w-[90px]">{numberOfTries}</span></h2>
         </div>
       </div>
       <div className="grid grid-cols-4 gap-1 px-1 justify-items-center w-full max-w-5xl">
@@ -172,7 +179,7 @@ export default function Home() {
             <div
               onClick={() => handleClick(item.id, item.card.matchableId)}
               key={item.id}
-              className="flip-box cursor-pointer w-full max-w-[200px] h-[100px] sm:h-[200px]"
+              className="flip-box cursor-pointer w-full max-w-[150px] h-[100px] sm:h-[150px]"
             >
               <div id={item.id} className="flip-box-inner w-full">
                 <div className="bg-green-700 flex flex-col justify-center items-center flip-box-front w-full rounded-md">
@@ -190,6 +197,10 @@ export default function Home() {
             </div>
           ))
         }
+      </div>
+      <div className="w-full max-w-5xl flex justify-between px-4">
+        <h2 className="text-2xl font-bold">Level: {level}</h2>
+        <button onClick={resetGame} className="px-2 py-1 bg-gray-700 text-gray-50 rounded-md">Reset Game</button>
       </div>
     </main>
   );
